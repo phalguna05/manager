@@ -1,0 +1,33 @@
+.chits_card {
+	display: flex;
+	flex-direction: column;
+	background-color: white;
+	width: 100%;
+	height: 100%;
+	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05),
+		0 15px 40px rgba(166, 173, 201, 0.2);
+	border-radius: 3px;
+	padding-top: 20px;
+	overflow: auto;
+	scroll-behavior: smooth;
+}
+.chit_list {
+	width: 90%;
+}
+.chits_card::-webkit-scrollbar {
+	display: none;
+}
+.Title {
+	color: rgb(0, 169, 175);
+	font-weight: bold;
+	font-family: "Times New Roman", Times, serif;
+}
+
+@media screen and (max-width: 1000px) {
+	.float_button {
+		bottom: 40px;
+	}
+	.chit_list {
+		width: 95%;
+	}
+}

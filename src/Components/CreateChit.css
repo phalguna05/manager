@@ -1,0 +1,35 @@
+.create_chit {
+	text-align: center;
+	width: 100%;
+	background-color: white;
+	padding: 4vw;
+	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05),
+		0 15px 40px rgba(166, 173, 201, 0.2);
+	border-radius: 3px;
+}
+.form-control {
+	margin-bottom: 10px;
+	font-family: "Times New Roman", Times, serif;
+}
+.create_button {
+	width: 40%;
+	margin-left: 13vw;
+	margin-top: 10px;
+	font-family: "Times New Roman", Times, serif;
+	font-weight: bold;
+}
+.chit_title {
+	color: rgb(0, 169, 175);
+	font-weight: bold;
+	font-family: "Times New Roman", Times, serif;
+}
+.link {
+	cursor: pointer;
+	color: rgb(0, 169, 175);
+	font-family: "Times New Roman", Times, serif;
+}
+@media screen and (max-width: 1000px) {
+	.create_button {
+		margin-left: 17vw;
+	}
+}

@@ -1,0 +1,49 @@
+body {
+	background-color: whitesmoke;
+}
+.brand {
+	font-family: "Times New Roman", Times, serif;
+	color: white;
+	font-weight: bold;
+}
+.dashboard {
+	display: flex;
+	flex-direction: row;
+	background-color: whitesmoke;
+}
+.left_dashboard {
+	width: 40vw;
+	height: 92vh;
+
+	margin-left: 5vw;
+	padding: 10px;
+}
+.right_dashboard {
+	width: 43vw;
+	height: 92vh;
+	display: flex;
+	flex-direction: column;
+	margin-left: 5vw;
+}
+.right_first {
+	height: 46vh;
+
+	padding: 10px;
+}
+.right_second {
+	height: 46vh;
+
+	padding: 10px;
+}
+@media screen and (max-width: 1000px) {
+	.dashboard {
+		flex-direction: column;
+	}
+	.left_dashboard {
+		width: 86vw;
+	}
+	.right_dashboard {
+		width: 86vw;
+		margin-top: 20px;
+	}
+}

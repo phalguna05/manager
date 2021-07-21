@@ -1,0 +1,23 @@
+.chit_details_card {
+	height: 80vh;
+}
+.add_members {
+	display: flex;
+	flex-direction: column;
+}
+.add_top_section {
+	margin-top: 15px;
+	display: flex;
+	flex-direction: row;
+}
+
+.dropdown {
+	width: 50%;
+	margin-left: 5vw;
+	margin-right: 2vw;
+}
+.btn_add {
+	width: 25%;
+	padding: 4px;
+	height: 5.2vh;
+}

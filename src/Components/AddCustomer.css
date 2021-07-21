@@ -1,0 +1,29 @@
+body {
+	background-color: whitesmoke;
+}
+.table {
+	width: 90%;
+	margin-left: 5vw;
+	margin-top: 5vh;
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
+}
+
+.drops {
+	width: 80%;
+	margin-top: 5vh;
+	margin-left: 10vw;
+}
+.form-group {
+	display: flex;
+	flex-direction: column;
+	padding: 20px;
+}
+.form-control {
+	align-self: center;
+	width: 60%;
+}
+.add_button {
+	width: 60%;
+	align-self: center;
+}

@@ -1,0 +1,154 @@
+.home_screen {
+	display: flex;
+	flex-direction: row;
+}
+.left_screen {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	width: 60%;
+	height: 100vh;
+	float: left;
+	background-color: rgb(250, 250, 250);
+}
+.right_screen {
+	display: flex;
+	flex-direction: column;
+	width: 40%;
+	height: 100vh;
+	background-color: rgb(250, 250, 250);
+	float: left;
+}
+.main_text {
+	width: 90%;
+	margin-left: 3.3vw;
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
+	font-weight: bold;
+	color: rgb(0, 103, 151);
+	font-size: 20px;
+	float: left;
+	text-align: left;
+}
+.logo {
+	width: 80%;
+	float: left;
+	margin-top: 7vh;
+}
+.title {
+	font-family: "Times New Roman", Times, serif;
+	font-weight: bolder;
+	color: rgba(3, 117, 117, 0.932);
+	float: right;
+	margin-left: 6vw;
+	background-color: lavender;
+	padding: 8px;
+	border-radius: 8px;
+	margin-top: 6vh;
+	font-size: 40px;
+}
+.first {
+	animation-name: trans1;
+	animation-duration: 5s;
+	/* background-color: rgb(173, 255, 173); */
+	padding: 5px;
+	margin-right: 8px;
+	border-radius: 6px;
+}
+.second {
+	animation-name: trans2;
+	animation-duration: 5s;
+	/* background-color: rgb(173, 255, 173); */
+	padding: 5px;
+	margin-right: 8px;
+	border-radius: 6px;
+}
+.third {
+	animation-name: trans3;
+	animation-duration: 5s;
+	/* background-color: rgb(173, 255, 173); */
+	padding: 5px;
+	border-radius: 6px;
+}
+.login_card {
+	display: flex;
+	flex-direction: column;
+	padding: 4vw;
+	width: 80%;
+
+	margin-top: 18vh;
+	background-color: white;
+	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05),
+		0 15px 40px rgba(166, 173, 201, 0.2);
+	border-radius: 3px;
+}
+.sign_card {
+	display: flex;
+	flex-direction: column;
+	padding: 4vw;
+	width: 80%;
+	margin-top: 14vh;
+	background-color: white;
+	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05),
+		0 15px 40px rgba(166, 173, 201, 0.2);
+	border-radius: 3px;
+}
+.login_title {
+	font-family: "Times New Roman", Times, serif;
+	font-weight: bolder;
+	color: teal;
+	align-self: center;
+}
+.register {
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
+	color: primary;
+	align-self: center;
+}
+
+@media screen and (max-width: 1000px) {
+	.home_screen {
+		flex-direction: column;
+	}
+	.left_screen {
+		width: 100%;
+		align-items: center;
+	}
+	.main_text {
+		font-size: 18px;
+	}
+	.right_screen {
+		width: 100%;
+		align-items: center;
+	}
+}
+@keyframes trans1 {
+	0% {
+		opacity: 0;
+	}
+	33% {
+		opacity: 1;
+	}
+}
+@keyframes trans2 {
+	0% {
+		opacity: 0;
+	}
+	33% {
+		opacity: 0;
+	}
+	60% {
+		opacity: 1;
+	}
+}
+@keyframes trans3 {
+	0% {
+		opacity: 0;
+	}
+	60% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}

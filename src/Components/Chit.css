@@ -1,0 +1,63 @@
+.individual_card {
+	width: 100%;
+	margin-left: 2vw;
+	color: black;
+	background-color: rgb(224, 224, 224);
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 30px;
+	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05),
+		0 15px 40px rgba(166, 173, 201, 0.2);
+	border-radius: 3px;
+	padding: 20px;
+	cursor: pointer;
+}
+.top_section {
+	display: flex;
+	flex-direction: row;
+}
+
+.column_name {
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
+	color: rgb(0, 0, 0);
+	font-weight: bold;
+}
+.field_value {
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
+	color: rgb(0, 0, 0);
+	font-weight: bold;
+}
+.bottom_section {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+}
+.table_section {
+	border: 0px;
+	text-align: left;
+	padding: 5px;
+}
+td {
+	padding-right: 15px;
+}
+.left_section {
+	line-height: 9px;
+}
+.right_section {
+	margin-left: auto;
+	line-height: 9px;
+}
+.links {
+	font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+		"Lucida Sans", Arial, sans-serif;
+	color: teal;
+}
+.links:hover {
+	color: rgb(0, 190, 190);
+}
+
+.individual_card:hover {
+	background-color: rgb(201, 201, 201);
+}
