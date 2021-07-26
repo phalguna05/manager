@@ -39,7 +39,6 @@ const AddCustomers = () => {
 			})
 			.catch();
 	};
-	console.log(customers);
 	return (
 		<div className="add_customer">
 			<NavBar />

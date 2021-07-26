@@ -18,7 +18,6 @@ const chitReducer = (state = initialState, action) => {
 			];
 		case "REMOVE_MEMBER":
 			let obj = state.filter((ob) => ob._id === action.payload.chit_id);
-			console.log(obj);
 			var newObj = obj[0];
 			let newMembers = newObj.ChitMembers.filter(
 				(member) => member !== action.payload.member
@@ -33,7 +32,6 @@ const chitReducer = (state = initialState, action) => {
 					}
 				}),
 			];
-
 		default:
 			return state;
 	}
