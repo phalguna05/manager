@@ -42,6 +42,7 @@ const CreateChit = () => {
 			transactions: [],
 			due_lists: [],
 			end_date: end,
+			current_month: 1,
 		};
 		axios
 			.post("http://localhost:5001/api/createChit", data)

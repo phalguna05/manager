@@ -15,27 +15,6 @@ const AddCustomers = () => {
 		Mobile: "",
 		UserId: User._id,
 	});
-	useEffect(() => {
-		if (customers.length == 0) {
-			axios
-				.post("http://localhost:5001/api/getCustomers", { UserId: User._id })
-				.then((res) => {
-					if (res.data.status == "success") {
-						dispatch(addAllCustomers(res.data.Customers));
-						setCustomer({
-							CustomerName: "",
-							Email: "",
-							Mobile: "",
-							Chits: [],
-							UserId: User._id,
-						});
-					} else {
-						//alert(res.data.message);
-					}
-				})
-				.catch();
-		}
-	}, []);
 	const handleChange = (e) => {
 		const name = e.target.name;
 		const value = e.target.value;
@@ -46,7 +25,7 @@ const AddCustomers = () => {
 			.post("http://localhost:5001/api/addCustomer", customer)
 			.then((res) => {
 				if (res.data.status == "success") {
-					dispatch(addCustomer(customer));
+					dispatch(addCustomer(res.data.details));
 					setCustomer({
 						CustomerName: "",
 						Email: "",

@@ -1,5 +1,9 @@
 body {
 	background-color: whitesmoke;
+	overflow: scroll;
+}
+body::-webkit-scrollbar {
+	display: none;
 }
 .brand {
 	font-family: "Times New Roman", Times, serif;
@@ -13,9 +17,9 @@ body {
 }
 .left_dashboard {
 	width: 40vw;
-	height: 92vh;
-
-	margin-left: 5vw;
+	height: 90.5vh;
+	margin-top: 0.5vw;
+	margin-left: 7vw;
 	padding: 10px;
 }
 .right_dashboard {
@@ -23,17 +27,57 @@ body {
 	height: 92vh;
 	display: flex;
 	flex-direction: column;
-	margin-left: 5vw;
+	margin-left: 1vw;
 }
 .right_first {
-	height: 46vh;
-
+	height: 36vh;
+	display: flex;
 	padding: 10px;
+	margin-top: 8px;
 }
 .right_second {
-	height: 46vh;
-
+	height: 54vh;
 	padding: 10px;
+}
+.total_duelists {
+	width: 20vw;
+	height: 30vh;
+	display: flex;
+	flex-direction: column;
+	text-align: center;
+	text-align: left;
+
+	padding-top: 6vh;
+	background-color: white;
+	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05),
+		0 15px 40px rgba(166, 173, 201, 0.2);
+	border-radius: 10px;
+}
+.total_transactions {
+	width: 20vw;
+	height: 30vh;
+	margin-left: 2vw;
+	display: flex;
+	flex-direction: column;
+	text-align: left;
+
+	padding-top: 6vh;
+	background-color: white;
+	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05),
+		0 15px 40px rgba(166, 173, 201, 0.2);
+	border-radius: 10px;
+}
+.heading {
+	font-family: "Times New Roman", Times, serif;
+	font-size: 20px;
+	margin-left: 1.5vw;
+}
+.value {
+	font-family: "Times New Roman", Times, serif;
+	font-weight: bold;
+	font-size: 24px;
+	margin-left: 1.5vw;
+	margin-bottom: 2vh;
 }
 @media screen and (max-width: 1000px) {
 	.dashboard {
@@ -41,9 +85,17 @@ body {
 	}
 	.left_dashboard {
 		width: 86vw;
+		margin-left: 5vw;
 	}
 	.right_dashboard {
 		width: 86vw;
 		margin-top: 20px;
+		margin-left: 5vw;
+	}
+	.total_duelists {
+		width: 40vw;
+	}
+	.total_transactions {
+		width: 40vw;
 	}
 }

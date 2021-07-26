@@ -39,7 +39,7 @@ const Chit = (props) => {
 							</td>
 						</tr>
 					</table>
-					<DeleteIcon />
+					<DeleteIcon fontSize="small" />
 				</div>
 				<div className="right_section">
 					<table className="table_section">

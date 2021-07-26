@@ -1,14 +1,17 @@
 .chit_details_card {
 	height: 80vh;
+	overflow: scroll;
 }
 .add_members {
 	display: flex;
 	flex-direction: column;
 }
 .add_top_section {
-	margin-top: 15px;
 	display: flex;
 	flex-direction: row;
+}
+.chit_details_card::-webkit-scrollbar {
+	display: none;
 }
 
 .dropdown {

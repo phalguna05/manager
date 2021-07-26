@@ -1,16 +1,43 @@
 import react, { useState } from "react";
 import { Tab, Tabs, Form, Button, Table } from "react-bootstrap";
+import EnrollPayments from "../EnrollPayments/EnrollPayments";
 import { useSelector, useDispatch } from "react-redux";
-import { updateMembers } from "../../Actions/actions";
+import { updateMembers, removeMember } from "../../Actions/actions";
 import "./ChitDetail.css";
+import DueLists from "../DueLists/DueLists";
 import axios from "axios";
+import Transactions from "../Transactions/Transactions";
 const ChitDetail = (props) => {
-	console.log(props.info);
 	const Customers = useSelector((state) => state.Customers);
-	const [members, setMembers] = useState([]);
 	const dispatch = useDispatch();
 	const [selectedCustomer, setSelectedCustomer] = useState("");
+	const handleCustomerRemove = (id) => {
+		var data = { chit_id: props.info._id, customer_id: id };
+		axios
+			.post("http://localhost:5001/api/removeMemberFromChit", data)
+			.then((res) => {
+				if (res.data.status == "success") {
+					console.log("hello");
+				} else {
+					alert(res.data.message);
+				}
+			})
+			.catch();
+		axios
+			.post("http://localhost:5001/api/removeChitFromCustomer", data)
+			.then((res) => {
+				if (res.data.status == "success") {
+					console.log("hello");
+				} else {
+					alert(res.data.message);
+				}
+			})
+			.catch();
+	};
 	const handleAdd = () => {
+		const row = Customers.filter((obj) => {
+			return obj._id === selectedCustomer;
+		});
 		axios
 			.post("http://localhost:5001/api/addMember", {
 				chit_id: props.info._id,
@@ -42,16 +69,59 @@ const ChitDetail = (props) => {
 				}
 			})
 			.catch();
+		axios
+			.post("http://localhost:5001/api/setDue", {
+				customer_name: row[0].CustomerName,
+				customer_id: selectedCustomer,
+				chit_id: props.info._id,
+				amount: 0,
+			})
+			.then((res) => {
+				if (res.data.status == "success") {
+					console.log("hel");
+				} else {
+					alert(res.data.message);
+				}
+			})
+			.catch();
 	};
-	console.log(Customers);
 	return (
 		<div className="chit_details_card">
 			<Tabs fill defaultActiveKey="payments" id="uncontrolled-tab-example">
-				<Tab eventKey="payments" title="Enroll Payments"></Tab>
-				<Tab eventKey="transactions" title="Transactions"></Tab>
-				<Tab eventKey="dues" title="Due List"></Tab>
+				<Tab eventKey="payments" title="Enroll Payments">
+					<div style={{ overflow: "auto" }}>
+						<EnrollPayments chitdetails={props.info} />
+					</div>
+				</Tab>
+				<Tab eventKey="transactions" title="Transactions">
+					<Transactions chit_id={props.info._id} />
+				</Tab>
+				<Tab eventKey="dues" title="Due List">
+					<DueLists chit_id={props.info._id} />
+				</Tab>
 				<Tab eventKey="add" title="Add Members">
 					<div className="add_members">
+						<div style={{ display: "flex", marginTop: "5px" }}>
+							<p
+								style={{
+									fontFamily: "Times New Roman, Times, serif",
+									fontWeight: "bold",
+									marginLeft: "25vw",
+									fontSize: "15px",
+								}}
+							>
+								Maximum members allowed : <u>{props.info.Members}</u>
+							</p>
+							<p
+								style={{
+									fontFamily: "Times New Roman, Times, serif",
+									fontWeight: "bold",
+									fontSize: "15px",
+								}}
+							>
+								&nbsp; Current members : <u>{props.info.ChitMembers.length}</u>{" "}
+							</p>
+						</div>
 						<div className="add_top_section">
 							<Form.Control
 								as="select"
@@ -60,7 +130,9 @@ const ChitDetail = (props) => {
 								onChange={(e) => setSelectedCustomer(e.target.value)}
 							>
 								<option>Select User</option>
-								{Customers.map((cust) => (
+								{Customers.filter(
+									(obj) => !props.info.ChitMembers.includes(obj._id)
+								).map((cust) => (
 									<option value={cust._id}>{cust.CustomerName}</option>
 								))}
 							</Form.Control>
@@ -68,24 +140,45 @@ const ChitDetail = (props) => {
 								className="btn_add"
 								variant="outline-info"
 								onClick={handleAdd}
+								disabled={
+									props.info.Members === props.info.ChitMembers.length
+										? true
+										: false
+								}
 							>
 								Add Customer
 							</Button>
 						</div>
+
 						<div className="add_bottom_section">
-							<Table responsive="sm" striped borderd hover>
+							<Table responsive="sm" borderd hover>
 								<thead>
 									<tr>
 										<th>Member Name</th>
+										<th>Member Id</th>
 										<th></th>
 									</tr>
 								</thead>
 								<tbody>
-									{props.info.ChitMembers.map((cust) => (
+									{Customers.filter((obj) =>
+										props.info.ChitMembers.includes(obj._id)
+									).map((cust) => (
 										<tr>
-											<td>{cust}</td>
-											<td>
-												<Button variant="outline-danger" size="sm">
+											<td>{cust.CustomerName}</td>
+											<td style={{ overflow: "hidden" }}>{cust._id}</td>
+											<td style={{ float: "left" }}>
+												<Button
+													variant="outline-danger"
+													size="sm"
+													onClick={() => {
+														var data = {
+															chit_id: props.info._id,
+															member: cust._id,
+														};
+														dispatch(removeMember(data));
+														handleCustomerRemove(cust._id);
+													}}
+												>
 													Remove From Chit
 												</Button>
 											</td>

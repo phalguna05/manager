@@ -18,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
 		top: "91.9%",
 		bottom: 0,
 		height: "8%",
-		background: "#a3a2a2",
+		backgroundColor: "#DCDCDC",
 	},
 	fabButton: {
 		position: "absolute",
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 		left: 0,
 		right: 0,
 		margin: "0 auto",
-		background: "#707070",
+		background: "#B8B8B8",
 	},
 }));
 const ViewChits = () => {
