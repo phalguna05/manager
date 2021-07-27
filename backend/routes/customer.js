@@ -2,7 +2,6 @@ const express = require("express");
 const router = express.Router();
 const customer = require("../models/customer.js");
 router.post("/getCustomers", async (req, res) => {
-	console.log(req);
 	try {
 		const customers = await customer.find({ UserId: req.body.UserId });
 		if (customers.length > 0) {
@@ -21,7 +20,6 @@ router.post("/addCustomer", async (req, res) => {
 		Mobile: req.body.Mobile,
 		UserId: req.body.UserId,
 		Chits: [],
-		IsPaidInstallment: false,
 	};
 	const newCustomer = new customer(data);
 	try {
@@ -37,7 +35,10 @@ router.post("/addChit", async (req, res) => {
 			_id: req.body.customer_id,
 		});
 		var newCustomerDetails = customerDetails;
-		newCustomerDetails.Chits.push(req.body.chit_id);
+		newCustomerDetails.Chits.push({
+			ChitId: req.body.chit_id,
+			IsPaidInstallment: false,
+		});
 		await newCustomerDetails.save();
 		res.status(201).send({ status: "success" });
 	} catch (error) {
@@ -73,7 +74,15 @@ router.post("/makeTransactionInCustomerAccount", async (req, res) => {
 
 		var newCustomerDetails = customerDetails;
 		newCustomerDetails.Transactions = arr;
-		newCustomerDetails.IsPaidInstallment = true;
+		var arr = newCustomerDetails.Chits.filter((obj) => {
+			if (obj.ChitId == req.body.chit_id) {
+				obj.IsPaidInstallment = true;
+				return true;
+			} else {
+				return true;
+			}
+		});
+		newCustomerDetails.Chits = arr;
 		await newCustomerDetails.save();
 		res.status(201).send({ status: "success" });
 	} catch (error) {

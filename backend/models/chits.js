@@ -64,6 +64,22 @@ const chitSchema = mongoose.Schema({
 	CurrentMonth: {
 		type: Number,
 	},
+	ChitPayments: [
+		{
+			PaidTo: {
+				type: String,
+			},
+			Amount: {
+				type: Number,
+			},
+			Month: {
+				type: Number,
+			},
+			DateAndTime: {
+				type: String,
+			},
+		},
+	],
 });
 const chits = mongoose.model("chits", chitSchema);
 module.exports = chits;

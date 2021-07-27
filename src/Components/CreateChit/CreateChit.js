@@ -41,6 +41,7 @@ const CreateChit = () => {
 			chit_members: [],
 			transactions: [],
 			due_lists: [],
+			chit_payments: [],
 			end_date: end,
 			current_month: 1,
 		};

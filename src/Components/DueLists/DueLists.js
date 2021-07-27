@@ -17,7 +17,6 @@ const DueLists = (props) => {
 			})
 			.catch();
 	}, []);
-	console.log(dues);
 	return (
 		<Table hover size="md">
 			<thead style={{ textAlign: "center" }}>

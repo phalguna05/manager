@@ -13,6 +13,7 @@ import axios from "axios";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { addChits } from "../../Actions/actions";
 import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 const useStyles = makeStyles((theme) => ({
 	appBar: {
 		top: "91.9%",
@@ -33,13 +34,13 @@ const useStyles = makeStyles((theme) => ({
 const ViewChits = () => {
 	const classes = useStyles();
 	const Chits = useSelector((state) => state.Chits);
-	console.log(Chits);
+	const login = useParams().login;
 	const dispatch = useDispatch();
 	const User = useSelector((state) => state.User);
 	const [modalShow, setModalShow] = useState(false);
 	useEffect(() => {
 		axios
-			.post("http://localhost:5001/api/getChits", { userId: User._id })
+			.post("http://localhost:5001/api/getChits", { userId: login })
 			.then((res) => {
 				if (res.data.status == "success") {
 					if (Chits.length == 0) dispatch(addChits(res.data.Chits));

@@ -19,7 +19,6 @@ const Home = () => {
 		Mobile: "",
 	});
 	const [registered, setRegistered] = useState(true);
-	console.log(user);
 	const handleChange = (e) => {
 		const name = e.target.name;
 		const value = e.target.value;
@@ -39,8 +38,8 @@ const Home = () => {
 					user.Username === res.data.User.UserName &&
 					user.Password === res.data.User.Password
 				) {
-					dispatch(addUser(res.data.User));
-					history.push("/Dashboard");
+					// dispatch(addUser(res.data.User));
+					history.push(`/${res.data.User._id}/Dashboard`);
 				} else {
 					alert("Invalid username or password");
 				}

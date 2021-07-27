@@ -2,7 +2,11 @@ import react, { useState } from "react";
 import { Tab, Tabs, Form, Button, Table } from "react-bootstrap";
 import EnrollPayments from "../EnrollPayments/EnrollPayments";
 import { useSelector, useDispatch } from "react-redux";
-import { updateMembers, removeMember } from "../../Actions/actions";
+import {
+	updateMembers,
+	removeMember,
+	addChitToCustomer,
+} from "../../Actions/actions";
 import "./ChitDetail.css";
 import DueLists from "../DueLists/DueLists";
 import axios from "axios";
@@ -63,7 +67,12 @@ const ChitDetail = (props) => {
 			})
 			.then((res) => {
 				if (res.data.status == "success") {
-					console.log("hello");
+					dispatch(
+						addChitToCustomer({
+							customer_id: selectedCustomer,
+							chit_id: props.info._id,
+						})
+					);
 				} else {
 					alert(res.data.message);
 				}

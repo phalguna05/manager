@@ -4,12 +4,32 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { makePayment } from "../../Actions/actions";
 import { useState } from "react";
+import { BsFillStarFill } from "react-icons/bs";
 import { format } from "date-fns";
 const EnrollPayments = (props) => {
 	const Customers = useSelector((state) => state.Customers);
 	const [template, setTemplate] = useState();
+	const [payments, setPayments] = useState([]);
+	var paymentList = [];
+	payments.map((obj) => {
+		paymentList.push(obj.PaidTo);
+	});
 	const dispatch = useDispatch();
-	console.log(Customers);
+	const install = (row) => {
+		if (row.Chits.length > 0) {
+			const arr = row.Chits.filter((obj) => {
+				if (obj.ChitId === props.chitdetails._id) {
+					return true;
+				}
+			});
+			if (arr[0].IsPaidInstallment) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	};
+
 	useEffect(() => {
 		axios
 			.post("http://localhost:5001/api/getTemplateById", {
@@ -18,6 +38,16 @@ const EnrollPayments = (props) => {
 			.then((res) => {
 				if (res.data.status === "success") {
 					setTemplate(res.data.Templates);
+				}
+			})
+			.catch();
+		axios
+			.post("http://localhost:5001/api/getPayments", {
+				chit_id: props.chitdetails._id,
+			})
+			.then((res) => {
+				if (res.data.status === "success") {
+					setPayments(res.data.ChitPayments);
 				}
 			})
 			.catch();
@@ -38,7 +68,11 @@ const EnrollPayments = (props) => {
 							props.chitdetails.ChitMembers.includes(obj._id)
 					  ).map((row) => (
 							<tr>
-								<td>{row.CustomerName}</td>
+								<td>
+									{paymentList.includes(row._id) ? <BsFillStarFill /> : null}
+									&nbsp;
+									{row.CustomerName}
+								</td>
 								<td>
 									{
 										template[0].Schema[props.chitdetails.CurrentMonth - 1]
@@ -46,7 +80,7 @@ const EnrollPayments = (props) => {
 									}
 								</td>
 								<td>
-									{row.IsPaidInstallment ? (
+									{install(row) ? (
 										<p style={{ color: "green" }}>Paid</p>
 									) : (
 										<p style={{ color: "red" }}>Not Paid</p>
@@ -59,7 +93,7 @@ const EnrollPayments = (props) => {
 											width: "10vw",
 											padding: "4px",
 										}}
-										disabled={row.IsPaidInstallment ? true : false}
+										disabled={install(row)}
 										size="md"
 										onClick={() => {
 											axios
@@ -98,6 +132,38 @@ const EnrollPayments = (props) => {
 												.then((res) => {
 													if (res.data.status === "success") {
 														dispatch(makePayment({ customer_id: row._id }));
+													}
+												})
+												.catch();
+										}}
+									>
+										Recieved
+									</Button>
+									<Button
+										style={{
+											width: "10vw",
+											padding: "4px",
+											marginLeft: "10px",
+										}}
+										variant="outline-dark"
+										disabled={paymentList.includes(row._id) ? true : false}
+										onClick={() => {
+											axios
+												.post("http://localhost:5001/api/makeChitPayment", {
+													chit_id: props.chitdetails._id,
+													amount: parseInt(
+														template[0].Schema[
+															props.chitdetails.CurrentMonth - 1
+														].Payment
+													),
+													paidto: row._id,
+													month: props.chitdetails.CurrentMonth,
+													date: format(new Date(), "dd/MM/yyyy"),
+												})
+												.then((res) => {
+													if (res.data.status === "success") {
+														setPayments(res.data.ChitPayments);
+														alert("Succesfully recorded payment!!!");
 													}
 												})
 												.catch();

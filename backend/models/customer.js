@@ -16,10 +16,16 @@ const customerSchema = mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	Chits: {
-		type: [String],
-		required: true,
-	},
+	Chits: [
+		{
+			ChitId: {
+				type: String,
+			},
+			IsPaidInstallment: {
+				type: Boolean,
+			},
+		},
+	],
 	Transactions: [
 		{
 			ChitId: {
@@ -33,10 +39,6 @@ const customerSchema = mongoose.Schema({
 			},
 		},
 	],
-	IsPaidInstallment: {
-		type: Boolean,
-		required: true,
-	},
 });
 const customer = mongoose.model("customers", customerSchema);
 module.exports = customer;

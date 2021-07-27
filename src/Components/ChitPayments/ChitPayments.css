@@ -1,0 +1,22 @@
+.ind_card {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	padding: 10px;
+	background-color: white;
+	box-shadow: 0 5px 10px rgba(154, 160, 185, 0.05),
+		0 15px 40px rgba(166, 173, 201, 0.2);
+	border-radius: 8px;
+}
+.text_item {
+	font-family: "Times New Roman", Times, serif;
+	font-weight: bold;
+}
+.label_item {
+	font-family: "Times New Roman", Times, serif;
+}
+.head {
+	font-family: "Times New Roman", Times, serif;
+	margin-left: 5px;
+	font-weight: bold;
+}

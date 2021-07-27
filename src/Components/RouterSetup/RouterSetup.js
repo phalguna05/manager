@@ -13,13 +13,13 @@ const RouterSetup = () => {
 			<Route path="/Home">
 				<Home />
 			</Route>
-			<Route path="/Dashboard">
+			<Route path="/:login/Dashboard">
 				<Dashboard />
 			</Route>
-			<Route path="/AddCustomers">
+			<Route path="/:login/AddCustomers">
 				<AddCustomers />
 			</Route>
-			<Route path="/Templates">
+			<Route path="/:login/Templates">
 				<Template />
 			</Route>
 		</Router>

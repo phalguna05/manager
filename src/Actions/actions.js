@@ -46,3 +46,9 @@ export const makePayment = (data) => {
 		payload: data,
 	};
 };
+export const addChitToCustomer = (data) => {
+	return {
+		type: "ADD_CHIT_TO_CUSTOMER",
+		payload: data,
+	};
+};

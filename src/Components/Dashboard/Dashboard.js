@@ -1,14 +1,17 @@
 import react, { useEffect } from "react";
 import "./Dashboard.css";
 import axios from "axios";
-import { addAllCustomers } from "../../Actions/actions";
+import { addAllCustomers, addUser } from "../../Actions/actions";
 import ChitPayments from "../ChitPayments/ChitPayments";
 import ViewChits from "../ViewChits/ViewChits";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { useParams } from "react-router";
 import { useSelector, useDispatch } from "react-redux";
 import Navbar from "../Navbar/Navbar";
 import { format } from "date-fns";
 const Dashboard = () => {
+	const login = useParams().login;
+	console.log(login);
 	const User = useSelector((state) => state.User);
 	const Chits = useSelector((state) => state.Chits);
 	const date = format(new Date(), "yyyy/MM/dd");
@@ -37,11 +40,19 @@ const Dashboard = () => {
 
 	const dispatch = useDispatch();
 	useEffect(() => {
+		axios
+			.post("http://localhost:5001/api/getUserById", { user_id: login })
+			.then((res) => {
+				if (res.data.status == "success") {
+					dispatch(addUser(res.data.User));
+				}
+			});
 		if (customers.length == 0) {
 			axios
-				.post("http://localhost:5001/api/getCustomers", { UserId: User._id })
+				.post("http://localhost:5001/api/getCustomers", { UserId: login })
 				.then((res) => {
 					if (res.data.status == "success") {
+						console.log(res.data.Customers);
 						dispatch(addAllCustomers(res.data.Customers));
 					} else {
 						//alert(res.data.message);

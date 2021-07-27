@@ -26,6 +26,7 @@ router.post("/createChit", async (req, res) => {
 		DueList: req.body.due_lists,
 		Transactions: req.body.transactions,
 		CurrentMonth: req.body.current_month,
+		ChitPayments: req.body.chit_payments,
 	};
 	const newChit = new chit(data);
 	try {
@@ -44,6 +45,7 @@ router.post("/addMember", async (req, res) => {
 		var newChitDetails = chitDetails;
 		newChitDetails.ChitMembers.push(req.body.customer_id);
 		var arr = newChitDetails.ChitMembers;
+
 		await newChitDetails.save();
 		res.status(201).send({ status: "success", ChitMembers: arr });
 	} catch (error) {
@@ -124,6 +126,33 @@ router.post("/getTransactions", async (req, res) => {
 		const chitDetails = await chit.findOne({ _id: req.body.chit_id });
 		var arr = chitDetails.Transactions;
 		res.status(201).send({ status: "success", Transactions: arr });
+	} catch (error) {
+		res.status(409).send(error.message);
+	}
+});
+router.post("/getPayments", async (req, res) => {
+	try {
+		const chitDetails = await chit.findOne({ _id: req.body.chit_id });
+		var arr = chitDetails.ChitPayments;
+		res.status(201).send({ status: "success", ChitPayments: arr });
+	} catch (error) {
+		res.status(409).send(error.message);
+	}
+});
+router.post("/makeChitPayment", async (req, res) => {
+	try {
+		const chitDetails = await chit.findOne({ _id: req.body.chit_id });
+		var arr = chitDetails.ChitPayments;
+		arr.push({
+			PaidTo: req.body.paidto,
+			Amount: req.body.amount,
+			Month: req.body.month,
+			DateAndTime: req.body.date,
+		});
+		var newChitDetails = chitDetails;
+		newChitDetails.ChitPayments = arr;
+		await newChitDetails.save();
+		res.status(201).send({ status: "success", ChitPayments: arr });
 	} catch (error) {
 		res.status(409).send(error.message);
 	}
