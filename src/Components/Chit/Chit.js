@@ -3,15 +3,10 @@ import "./Chit.css";
 import ChitDetail from "../ChitDetail/ChitDetail";
 import { parseISO, format } from "date-fns";
 import { Modal } from "react-bootstrap";
-import { useHistory } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import DeleteIcon from "@material-ui/icons/Delete";
 const Chit = (props) => {
 	const [modalShow, setModalShow] = useState(false);
-	const handleClose = () => {
-		setModalShow(false);
-	};
-	const history = useHistory();
 	const dateFormatter = (str) => {
 		const date = parseISO(str);
 		return format(date, "MMM yy");
@@ -25,48 +20,56 @@ const Chit = (props) => {
 			<div className="bottom_section">
 				<div className="left_section">
 					<table className="table_section">
-						<tr>
-							<th></th>
-							<th></th>
-						</tr>
-						<tr>
-							<td>
-								<p className="column_name">Chit Name </p>
-							</td>
-							<td>
-								{" "}
-								<p className="field_value">: {props.details.ChitName}</p>
-							</td>
-						</tr>
+						<thead>
+							<tr>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
+									<p className="column_name">Chit Name </p>
+								</td>
+								<td>
+									{" "}
+									<p className="field_value">: {props.details.ChitName}</p>
+								</td>
+							</tr>
+						</tbody>
 					</table>
 					<DeleteIcon fontSize="small" />
 				</div>
 				<div className="right_section">
 					<table className="table_section">
-						<tr>
-							<th></th>
-							<th></th>
-							<th></th>
-						</tr>
-						<tr>
-							<td>
-								{" "}
-								<p className="field_value">
+						<thead>
+							<tr>
+								<th></th>
+								<th></th>
+								<th></th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>
 									{" "}
-									{dateFormatter(props.details.StartDate)}
-								</p>
-							</td>
-							<td>
-								<p className="field_value">to</p>
-							</td>
-							<td>
-								{" "}
-								<p className="field_value">
+									<p className="field_value">
+										{" "}
+										{dateFormatter(props.details.StartDate)}
+									</p>
+								</td>
+								<td>
+									<p className="field_value">to</p>
+								</td>
+								<td>
 									{" "}
-									{dateFormatter(props.details.EndDate)}
-								</p>
-							</td>
-						</tr>
+									<p className="field_value">
+										{" "}
+										{dateFormatter(props.details.EndDate)}
+									</p>
+								</td>
+							</tr>
+						</tbody>
 					</table>
 
 					<Button

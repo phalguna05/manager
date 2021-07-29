@@ -1,4 +1,4 @@
-import react, { useState } from "react";
+import { useState } from "react";
 import { Tab, Tabs, Form, Button, Table } from "react-bootstrap";
 import EnrollPayments from "../EnrollPayments/EnrollPayments";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,17 +11,31 @@ import "./ChitDetail.css";
 import DueLists from "../DueLists/DueLists";
 import axios from "axios";
 import Transactions from "../Transactions/Transactions";
+import { useEffect } from "react";
 const ChitDetail = (props) => {
 	const Customers = useSelector((state) => state.Customers);
 	const dispatch = useDispatch();
 	const [selectedCustomer, setSelectedCustomer] = useState("");
+	const [template, setTemplate] = useState([]);
+	useEffect(() => {
+		axios
+			.post("http://localhost:5001/api/getTemplateById", {
+				template_id: props.info.Template,
+			})
+			.then((res) => {
+				if (res.data.status === "success") {
+					setTemplate(res.data.Templates);
+				}
+			})
+			.catch();
+	}, [props.info.Template]);
 	const handleCustomerRemove = (id) => {
 		var data = { chit_id: props.info._id, customer_id: id };
 		axios
 			.post("http://localhost:5001/api/removeMemberFromChit", data)
 			.then((res) => {
-				if (res.data.status == "success") {
-					console.log("hello");
+				if (res.data.status === "success") {
+					alert("Member Removed!!");
 				} else {
 					alert(res.data.message);
 				}
@@ -30,8 +44,7 @@ const ChitDetail = (props) => {
 		axios
 			.post("http://localhost:5001/api/removeChitFromCustomer", data)
 			.then((res) => {
-				if (res.data.status == "success") {
-					console.log("hello");
+				if (res.data.status === "success") {
 				} else {
 					alert(res.data.message);
 				}
@@ -48,7 +61,7 @@ const ChitDetail = (props) => {
 				customer_id: selectedCustomer,
 			})
 			.then((res) => {
-				if (res.data.status == "success") {
+				if (res.data.status === "success") {
 					dispatch(
 						updateMembers({
 							chit_members: res.data.ChitMembers,
@@ -66,7 +79,7 @@ const ChitDetail = (props) => {
 				chit_id: props.info._id,
 			})
 			.then((res) => {
-				if (res.data.status == "success") {
+				if (res.data.status === "success") {
 					dispatch(
 						addChitToCustomer({
 							customer_id: selectedCustomer,
@@ -83,11 +96,12 @@ const ChitDetail = (props) => {
 				customer_name: row[0].CustomerName,
 				customer_id: selectedCustomer,
 				chit_id: props.info._id,
-				amount: 0,
+				due_amount: 0,
+				current_amount:
+					template[0].Schema[props.info.CurrentMonth - 1].Installment,
 			})
 			.then((res) => {
-				if (res.data.status == "success") {
-					console.log("hel");
+				if (res.data.status === "success") {
 				} else {
 					alert(res.data.message);
 				}
@@ -141,8 +155,10 @@ const ChitDetail = (props) => {
 								<option>Select User</option>
 								{Customers.filter(
 									(obj) => !props.info.ChitMembers.includes(obj._id)
-								).map((cust) => (
-									<option value={cust._id}>{cust.CustomerName}</option>
+								).map((cust, index) => (
+									<option key={index} value={cust._id}>
+										{cust.CustomerName}
+									</option>
 								))}
 							</Form.Control>
 							<Button
@@ -160,7 +176,7 @@ const ChitDetail = (props) => {
 						</div>
 
 						<div className="add_bottom_section">
-							<Table responsive="sm" borderd hover>
+							<Table responsive="sm" hover borderd="true">
 								<thead>
 									<tr>
 										<th>Member Name</th>
@@ -171,8 +187,8 @@ const ChitDetail = (props) => {
 								<tbody>
 									{Customers.filter((obj) =>
 										props.info.ChitMembers.includes(obj._id)
-									).map((cust) => (
-										<tr>
+									).map((cust, index) => (
+										<tr key={index}>
 											<td>{cust.CustomerName}</td>
 											<td style={{ overflow: "hidden" }}>{cust._id}</td>
 											<td style={{ float: "left" }}>

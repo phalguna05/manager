@@ -1,4 +1,4 @@
-import react, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "../Navbar/Navbar";
 import "./Template.css";
 import axios from "axios";
@@ -22,8 +22,7 @@ const Template = () => {
 				}
 			})
 			.catch();
-	}, []);
-	console.log(templates);
+	}, [User._id]);
 	const handleCreate = () => {
 		var arr = [];
 		for (let i = 0; i < months; i++) {
@@ -40,8 +39,7 @@ const Template = () => {
 				schema: newTemplate,
 			})
 			.then((res) => {
-				if (res.data.status == "success") {
-					console.log(res.data.Templates);
+				if (res.data.status === "success") {
 					setTemplates(res.data.Templates);
 					setNewTemplate([]);
 					setDisplay(false);
@@ -69,8 +67,8 @@ const Template = () => {
 						<Accordion.Collapse eventKey="0">
 							<Card.Body>
 								<div className="template_tables">
-									{templates.map((template) => (
-										<div>
+									{templates.map((template, index) => (
+										<div key={index}>
 											<label
 												style={{
 													marginLeft: "5vw",
@@ -102,8 +100,8 @@ const Template = () => {
 													</tr>
 												</thead>
 												<tbody style={{ height: "20vh", overflow: "auto" }}>
-													{template.Schema.map((row) => (
-														<tr>
+													{template.Schema.map((row, index) => (
+														<tr key={index}>
 															<th>{row.Month}</th>
 															<th>{row.Installment}</th>
 															<th>{row.Payment}</th>
@@ -134,7 +132,7 @@ const Template = () => {
 						type="text"
 						placeholder="Months"
 						className="form-control"
-						id="months_in"
+						id="months"
 						name="months"
 						onChange={(e) => setMonths(e.target.value)}
 						value={months}
@@ -167,7 +165,7 @@ const Template = () => {
 						</thead>
 						<tbody>
 							{newTemplate.map((temp, index) => (
-								<tr>
+								<tr key={index}>
 									<td>{temp.Month}</td>
 									<td>
 										<input
@@ -198,9 +196,7 @@ const Template = () => {
 							))}
 						</tbody>
 					</Table>
-				) : (
-					<h1></h1>
-				)}
+				) : null}
 			</div>
 		</div>
 	);

@@ -8,7 +8,7 @@ const chitReducer = (state = initialState, action) => {
 		case "UPDATE_MEMBERS":
 			return [
 				...state.filter((obj) => {
-					if (obj._id == action.payload.chit_id) {
+					if (obj._id === action.payload.chit_id) {
 						obj.ChitMembers = action.payload.chit_members;
 						return true;
 					} else {

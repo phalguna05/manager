@@ -51,9 +51,9 @@ router.post("/removeChitFromCustomer", async (req, res) => {
 			_id: req.body.customer_id,
 		});
 		var newCustomerDetails = customerDetails;
-		newCustomerDetails.Chits = newCustomerDetails.Chits.filter((chit) => {
-			chit !== req.body.chit_id;
-		});
+		newCustomerDetails.Chits = newCustomerDetails.Chits.filter(
+			(chit) => chit !== req.body.chit_id
+		);
 		await newCustomerDetails.save();
 		res.status(201).send({ status: "success" });
 	} catch (error) {
@@ -74,8 +74,8 @@ router.post("/makeTransactionInCustomerAccount", async (req, res) => {
 
 		var newCustomerDetails = customerDetails;
 		newCustomerDetails.Transactions = arr;
-		var arr = newCustomerDetails.Chits.filter((obj) => {
-			if (obj.ChitId == req.body.chit_id) {
+		arr = newCustomerDetails.Chits.filter((obj) => {
+			if (obj.ChitId === req.body.chit_id) {
 				obj.IsPaidInstallment = true;
 				return true;
 			} else {
@@ -84,6 +84,23 @@ router.post("/makeTransactionInCustomerAccount", async (req, res) => {
 		});
 		newCustomerDetails.Chits = arr;
 		await newCustomerDetails.save();
+		res.status(201).send({ status: "success" });
+	} catch (error) {
+		res.status(409).send(error.message);
+	}
+});
+router.post("/setInitialInstallments", async (req, res) => {
+	try {
+		var customers = await customer.find({});
+		var newCustomers = customers;
+		newCustomers.map((cust) => {
+			cust.Chits.map((chit) => {
+				chit.IsPaidInstallment = false;
+				return null;
+			});
+			return null;
+		});
+		await newCustomers.save();
 		res.status(201).send({ status: "success" });
 	} catch (error) {
 		res.status(409).send(error.message);

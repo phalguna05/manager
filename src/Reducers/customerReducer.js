@@ -17,7 +17,6 @@ const customerReducer = (state = initialState, action) => {
 			);
 			chit.IsPaidInstallment = true;
 			arr.push(chit);
-			console.log(arr);
 			return [
 				...state.filter((obj) => {
 					if (obj._id === action.payload.customer_id) {
@@ -29,7 +28,6 @@ const customerReducer = (state = initialState, action) => {
 				}),
 			];
 		case "ADD_CHIT_TO_CUSTOMER":
-			console.log(action.payload);
 			return [
 				...state.filter((obj) => {
 					if (obj._id === action.payload.customer_id) {

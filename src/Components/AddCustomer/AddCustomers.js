@@ -1,9 +1,9 @@
-import react, { useState, useEffect } from "react";
+import { useState } from "react";
 import NavBar from "../Navbar/Navbar";
 import { useSelector, useDispatch } from "react-redux";
 import { Table, Button, Accordion, Card } from "react-bootstrap";
 import "./AddCustomer.css";
-import { addCustomer, addAllCustomers } from "../../Actions/actions";
+import { addCustomer } from "../../Actions/actions";
 import axios from "axios";
 const AddCustomers = () => {
 	const dispatch = useDispatch();
@@ -24,7 +24,7 @@ const AddCustomers = () => {
 		axios
 			.post("http://localhost:5001/api/addCustomer", customer)
 			.then((res) => {
-				if (res.data.status == "success") {
+				if (res.data.status === "success") {
 					dispatch(addCustomer(res.data.details));
 					setCustomer({
 						CustomerName: "",
@@ -91,7 +91,7 @@ const AddCustomers = () => {
 				</Accordion>
 			</div>
 			<div className="table">
-				<Table responsive="sm" striped borderd hover>
+				<Table responsive="sm" striped borderd="true" hover>
 					<thead>
 						<tr>
 							<th>Customer Name</th>
@@ -101,8 +101,8 @@ const AddCustomers = () => {
 						</tr>
 					</thead>
 					<tbody>
-						{customers.map((cust) => (
-							<tr>
+						{customers.map((cust, index) => (
+							<tr key={index}>
 								<td>{cust.CustomerName}</td>
 								<td>{cust.Email}</td>
 								<td>{cust.Mobile}</td>

@@ -36,26 +36,25 @@ const ViewChits = () => {
 	const Chits = useSelector((state) => state.Chits);
 	const login = useParams().login;
 	const dispatch = useDispatch();
-	const User = useSelector((state) => state.User);
 	const [modalShow, setModalShow] = useState(false);
 	useEffect(() => {
 		axios
 			.post("http://localhost:5001/api/getChits", { userId: login })
 			.then((res) => {
-				if (res.data.status == "success") {
-					if (Chits.length == 0) dispatch(addChits(res.data.Chits));
+				if (res.data.status === "success") {
+					if (Chits.length === 0) dispatch(addChits(res.data.Chits));
 				} else {
 					alert(res.data.message);
 				}
 			})
 			.catch();
-	}, []);
+	}, [Chits.length, dispatch, login]);
 	return (
 		<div className="chits_card">
 			<CssBaseline />
 			<div className="chit_list">
-				{Chits.map((chit) => (
-					<Chit details={chit} />
+				{Chits.map((chit, index) => (
+					<Chit key={index} details={chit} />
 				))}
 			</div>
 			<AppBar position="sticky" color="primary" className={classes.appBar}>

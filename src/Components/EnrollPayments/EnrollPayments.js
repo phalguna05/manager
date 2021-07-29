@@ -13,15 +13,13 @@ const EnrollPayments = (props) => {
 	var paymentList = [];
 	payments.map((obj) => {
 		paymentList.push(obj.PaidTo);
+		return null;
 	});
 	const dispatch = useDispatch();
 	const install = (row) => {
+		var arr = [];
 		if (row.Chits.length > 0) {
-			const arr = row.Chits.filter((obj) => {
-				if (obj.ChitId === props.chitdetails._id) {
-					return true;
-				}
-			});
+			arr = row.Chits.filter((obj) => obj.ChitId === props.chitdetails._id);
 			if (arr[0].IsPaidInstallment) {
 				return true;
 			} else {
@@ -51,7 +49,7 @@ const EnrollPayments = (props) => {
 				}
 			})
 			.catch();
-	}, []);
+	}, [props.chitdetails.Template, props.chitdetails._id]);
 	return (
 		<Table hover size="md">
 			<thead style={{ textAlign: "center" }}>
@@ -66,8 +64,8 @@ const EnrollPayments = (props) => {
 				{template !== undefined
 					? Customers.filter((obj) =>
 							props.chitdetails.ChitMembers.includes(obj._id)
-					  ).map((row) => (
-							<tr>
+					  ).map((row, index) => (
+							<tr key={index}>
 								<td>
 									{paymentList.includes(row._id) ? <BsFillStarFill /> : null}
 									&nbsp;

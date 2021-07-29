@@ -5,12 +5,8 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import Background from "../../background.jpg";
 import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
-import { addUser } from "../../Actions/actions";
 const Home = () => {
 	const history = useHistory();
-	const userData = useSelector((state) => state.User);
-	const dispatch = useDispatch();
 	const [user, setUser] = useState({
 		Username: "",
 		Fullname: "",
@@ -71,7 +67,7 @@ const Home = () => {
 					</ul>
 				</div>
 
-				<img className="logo" src={Background}></img>
+				<img className="logo" alt="background" src={Background}></img>
 			</div>
 			<div className="right_screen">
 				{registered ? (
@@ -81,7 +77,6 @@ const Home = () => {
 							onChange={handleChange}
 							name="Username"
 							className="input_field"
-							id="outlined-basic"
 							label="Username"
 							variant="outlined"
 							size="small"
@@ -91,7 +86,6 @@ const Home = () => {
 							onChange={handleChange}
 							name="Password"
 							className="input_field"
-							id="outlined-basic"
 							label="Password"
 							type="password"
 							variant="outlined"
@@ -115,7 +109,6 @@ const Home = () => {
 							onChange={handleChange}
 							name="Username"
 							className="input_field"
-							id="outlined-basic"
 							label="Username"
 							variant="outlined"
 							size="small"
@@ -125,7 +118,6 @@ const Home = () => {
 							onChange={handleChange}
 							name="Fullname"
 							className="input_field"
-							id="outlined-basic"
 							label="Full Name"
 							variant="outlined"
 							size="small"
@@ -135,7 +127,6 @@ const Home = () => {
 							onChange={handleChange}
 							name="Email"
 							className="input_field"
-							id="outlined-basic"
 							label="Email"
 							type="email"
 							variant="outlined"
@@ -146,7 +137,6 @@ const Home = () => {
 							onChange={handleChange}
 							name="Mobile"
 							className="input_field"
-							id="outlined-basic"
 							label="Mobile"
 							type="tel"
 							variant="outlined"
@@ -157,7 +147,6 @@ const Home = () => {
 							onChange={handleChange}
 							name="Password"
 							className="input_field"
-							id="outlined-basic"
 							label="Password"
 							type="password"
 							variant="outlined"

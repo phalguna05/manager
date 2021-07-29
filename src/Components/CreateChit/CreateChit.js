@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Button } from "react-bootstrap";
 import axios from "axios";
 import "./CreateChit.css";
 import { useSelector, useDispatch } from "react-redux";
 import { addSingleChit } from "../../Actions/actions";
-import { useHistory } from "react-router-dom";
 const CreateChit = () => {
 	const dispatch = useDispatch();
 	const User = useSelector((state) => state.User);
-	const history = useHistory();
 	const [chit, setChit] = useState({
 		ChitName: "",
 		StartDate: "",
@@ -30,6 +28,7 @@ const CreateChit = () => {
 		var year = parseInt(chit.StartDate.slice(0, 4));
 		var resMon = (mon + parseInt(chit.Months)) % 12;
 		var resYear = year + Math.ceil((parseInt(chit.Months) - (12 - mon)) / 12);
+		// eslint-disable-next-line no-useless-concat
 		const end = resYear.toString() + "-" + "0" + resMon.toString() + "-" + day;
 		const data = {
 			chit_name: chit.ChitName,
@@ -48,8 +47,7 @@ const CreateChit = () => {
 		axios
 			.post("http://localhost:5001/api/createChit", data)
 			.then((res) => {
-				if (res.data.status == "success") {
-					console.log(res.data.ChitData);
+				if (res.data.status === "success") {
 					dispatch(addSingleChit(res.data.ChitData));
 					alert("Chit Created succesfully!!");
 				} else {

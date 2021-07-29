@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const chit = require("../models/chits.js");
+const template = require("../models/template.js");
 router.post("/getChits", async (req, res) => {
 	try {
 		const chits = await chit.find({ UserId: req.body.userId });
@@ -56,8 +57,6 @@ router.post("/removeMemberFromChit", async (req, res) => {
 	try {
 		const chitDetails = await chit.findOne({ _id: req.body.chit_id });
 		var newChitDetails = chitDetails;
-		console.log(newChitDetails.ChitMembers);
-		console.log(req.body);
 		var arr = newChitDetails.ChitMembers.filter(
 			(member) => member !== req.body.customer_id
 		);
@@ -84,7 +83,8 @@ router.post("/setDue", async (req, res) => {
 		arr.push({
 			MemberName: req.body.customer_name,
 			MemberId: req.body.customer_id,
-			Amount: req.body.amount,
+			DueAmount: req.body.due_amount,
+			CurrentAmount: req.body.current_amount,
 		});
 		var newChitDetails = chitDetails;
 		newChitDetails.DueList = arr;
@@ -153,6 +153,32 @@ router.post("/makeChitPayment", async (req, res) => {
 		newChitDetails.ChitPayments = arr;
 		await newChitDetails.save();
 		res.status(201).send({ status: "success", ChitPayments: arr });
+	} catch (error) {
+		res.status(409).send(error.message);
+	}
+});
+router.post("/setMonthlyDues", async (req, res) => {
+	try {
+		const chitDetails = await chit.find({});
+		var newChitDetails = chitDetails;
+		newChitDetails.map(async (chits) => {
+			try {
+				const templates = await template.findOne({
+					TemplateId: chits.Template,
+				});
+				chits.CurrentMonth += 1;
+				chits.DueList.map((obj) => {
+					obj.DueAmount = obj.CurrentAmount + obj.DueAmount;
+					obj.CurrentAmount =
+						templates.Schema[chits.CurrentMonth - 1].Installment;
+					return null;
+				});
+			} catch (error) {
+				res.status(409).send(error);
+			}
+		});
+		await newChitDetails.save();
+		res.status(201).send({ status: "success" });
 	} catch (error) {
 		res.status(409).send(error.message);
 	}

@@ -1,4 +1,4 @@
-import react, { useEffect } from "react";
+import { useEffect } from "react";
 import "./Dashboard.css";
 import axios from "axios";
 import { addAllCustomers, addUser } from "../../Actions/actions";
@@ -11,8 +11,6 @@ import Navbar from "../Navbar/Navbar";
 import { format } from "date-fns";
 const Dashboard = () => {
 	const login = useParams().login;
-	console.log(login);
-	const User = useSelector((state) => state.User);
 	const Chits = useSelector((state) => state.Chits);
 	const date = format(new Date(), "yyyy/MM/dd");
 	const month = date.substring(5, 8);
@@ -24,17 +22,21 @@ const Dashboard = () => {
 				transactionsSum += parseInt(trans.Amount);
 				count += 1;
 			}
+			return null;
 		});
+		return null;
 	});
 	var dueSum = 0;
 	var dueCount = 0;
 	Chits.map((obj) => {
 		obj.DueList.map((due) => {
-			if (due.Amount != "0") {
-				dueSum += parseInt(due.Amount);
+			if (due.DueAmount !== 0) {
+				dueSum += parseInt(due.DueAmount);
 				dueCount += 1;
 			}
+			return null;
 		});
+		return null;
 	});
 	const customers = useSelector((state) => state.Customers);
 
@@ -43,16 +45,15 @@ const Dashboard = () => {
 		axios
 			.post("http://localhost:5001/api/getUserById", { user_id: login })
 			.then((res) => {
-				if (res.data.status == "success") {
+				if (res.data.status === "success") {
 					dispatch(addUser(res.data.User));
 				}
 			});
-		if (customers.length == 0) {
+		if (customers.length === 0) {
 			axios
 				.post("http://localhost:5001/api/getCustomers", { UserId: login })
 				.then((res) => {
-					if (res.data.status == "success") {
-						console.log(res.data.Customers);
+					if (res.data.status === "success") {
 						dispatch(addAllCustomers(res.data.Customers));
 					} else {
 						//alert(res.data.message);
@@ -60,7 +61,7 @@ const Dashboard = () => {
 				})
 				.catch();
 		}
-	}, []);
+	}, [customers.length, dispatch, login]);
 	return (
 		<>
 			<Navbar />

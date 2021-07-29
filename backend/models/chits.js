@@ -40,7 +40,10 @@ const chitSchema = mongoose.Schema({
 			MemberId: {
 				type: String,
 			},
-			Amount: {
+			DueAmount: {
+				type: Number,
+			},
+			CurrentAmount: {
 				type: Number,
 			},
 		},

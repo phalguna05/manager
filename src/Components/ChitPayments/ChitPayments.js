@@ -19,19 +19,22 @@ const ChitPayments = () => {
 		res.map((obj) => {
 			arr.push(obj);
 			chitList.push(chit.ChitName);
+			return null;
 		});
+		return null;
 	});
 	if (Customers.length > 0) {
 		arr.map((obj) => {
 			var ans = Customers.filter((cust) => cust._id === obj.PaidTo);
 			customerName.push(ans[0].CustomerName);
+			return null;
 		});
 	}
 	return (
 		<div className="chitpayments_card" style={{ padding: "15px" }}>
 			<h6 className="head">Recent Chit Payments...</h6>
 			{arr.map((pay, index) => (
-				<div className="ind_card">
+				<div className="ind_card" key={index}>
 					<Container>
 						<Row>
 							<Col>
